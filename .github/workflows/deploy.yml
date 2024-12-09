@@ -1,0 +1,43 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Build the project
+        run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Firebase CLI
+        uses: wzieba/Firebase-Action@v2
+        with:
+          firebase_token: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+
+      - name: Deploy to Firebase Hosting
+        if: github.ref == 'refs/heads/main'
+        run: |
+          firebase use --add ${{ secrets.FIREBASE_PROJECT_PROD }}
+          firebase deploy --only hosting
+
+      - name: Deploy to Firebase Hosting (Dev)
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          firebase use --add ${{ secrets.FIREBASE_PROJECT_DEV }}
+          firebase deploy --only hosting
