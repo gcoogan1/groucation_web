@@ -1,7 +1,7 @@
 const App = () => {
   return (
     <div>
-      <h1>Groupcation App</h1>
+      <h1>Groupcation App!</h1>
     </div>
   );
 };

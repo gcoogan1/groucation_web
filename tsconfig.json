@@ -18,9 +18,6 @@
     },
     "outDir": "./dist" // Define the output directory for compiled JS files
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx" // Ensure TypeScript files inside src are included
-  ],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
