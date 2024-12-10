@@ -36,7 +36,7 @@ The Travel App is a React-based mobile application designed to help users manage
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/gcoogan1/groucation_web.git
-   cd travel-app
+   cd groupcation_web
    ```
 2. **Install Dependencies:**
    ```bash
