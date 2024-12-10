@@ -6,7 +6,7 @@
     "typeRoots": ["node_modules/@types"],
     "module": "ESNext",
     "moduleResolution": "node",
-    "target": "ES6",
+    "target": "ESNext", // Update target to ESNext for better compatibility with modern tools
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "incremental": true,
@@ -15,6 +15,12 @@
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@state/*": ["state/*"]
-    }
-  }
+    },
+    "outDir": "./dist" // Define the output directory for compiled JS files
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx" // Ensure TypeScript files inside src are included
+  ],
+  "exclude": ["node_modules"]
 }
