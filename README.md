@@ -7,9 +7,11 @@ The Travel App is a React-based mobile application designed to help users manage
 # Travel App (Development)
 
 ## Project Overview
+
 The Travel App is a React-based mobile application designed to help users manage their trips seamlessly. Users can create trips, invite others, and log trip details while enjoying features like authentication and advanced state management. This document provides an overview of the app’s development setup and deployment process.
 
 ## Key Features
+
 - **User Authentication:** Implemented using Firebase Authentication.
 - **Trip Management:** Users can create and manage trips, invite others, and track trip details.
 - **Real-time Updates:** Firebase enables real-time data synchronization.
@@ -17,6 +19,7 @@ The Travel App is a React-based mobile application designed to help users manage
 - **Data Persistence:** Firebase Firestore is utilized for storing and retrieving trip details.
 
 ## Technologies Used
+
 - **Frontend:** React Native
 - **State Management:** Redux Toolkit
 - **Backend Services:** Firebase (Authentication, Firestore)
@@ -27,35 +30,40 @@ The Travel App is a React-based mobile application designed to help users manage
 ## Development Setup
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - Firebase CLI
 - Git
 - A code editor (e.g., VS Code)
 
 ### Installation
+
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/gcoogan1/groucation_web.git
    cd groupcation_web
    ```
 2. **Install Dependencies:**
+
    ```bash
    npm install
    ```
 
-4. **Environment Variables:**
+3. **Environment Variables:**
+
    - Add a `.env` file to the root of your project with the following:
      ```env
      VITE_API_UR=api_url
      VITE_LOG_LEVEL="debug"
      ```
 
-5. **Start the Development Server:**
+4. **Start the Development Server:**
    ```bash
    npm run dev
    ```
 
 ### Project Structure
+
 ```
 groupcation_web/
 ├── src/
@@ -72,6 +80,7 @@ groupcation_web/
 ## Deployment
 
 ### Firebase Hosting
+
 1. **Install Firebase CLI:**
    ```bash
    npm install -g firebase-tools
@@ -87,13 +96,15 @@ groupcation_web/
    ```
 
 ## Roadmap
+
 - Add AI-based chat features.
 - Implement better error handling for API requests.
 - Enhance trip invitation system with email notifications.
 
 ## Contributing
+
 Feel free to fork the repository and submit pull requests for enhancements or bug fixes. For major changes, open an issue first to discuss the proposed updates.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
 
+This project is licensed under the MIT License. See the LICENSE file for details.
