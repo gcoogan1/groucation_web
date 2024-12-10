@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "groupcation-web-prod-92d63",
+    "dev": "groupcation-web-dev-8a687"
+  },
+  "targets": {
+    "groupcation-web-dev-8a687": {
+      "hosting": {
+        "dev": [
+          "groupcation-web-dev-8a687"
+        ],
+        "prod": [
+          "groupcation-web-prod-92d63"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
