@@ -7,6 +7,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "target": "ESNext", // Update target to ESNext for better compatibility with modern tools
+    "target": "ESNext", // Update target to ESNext for better compatibility with modern tools
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "incremental": true,
@@ -18,6 +19,9 @@
     },
     "outDir": "./dist" // Define the output directory for compiled JS files
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx" // Ensure TypeScript files inside src are included
+  ],
   "exclude": ["node_modules"]
 }
