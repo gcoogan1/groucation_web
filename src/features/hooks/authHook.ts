@@ -17,7 +17,18 @@ const useAuthListener = () => {
     // Set up the Firebase auth state listener
     const authStateListener = onAuthStateChangedListener((currentUser) => {
       // Update Redux store with the current user or null
-      dispatch(setUser(currentUser));
+      if (currentUser) {
+        // Update Redux store with the current user email and uid
+        dispatch(
+          setUser({
+            email: currentUser.email,
+            uid: currentUser.uid,
+          }),
+        );
+      } else {
+        // Handle case where there is no authenticated user
+        dispatch(setUser(null));
+      }
       // Set loading state to false after fetching user info
       dispatch(setLoading(false));
     });
