@@ -6,7 +6,9 @@ import {
   User,
   sendPasswordResetEmail,
 } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+
+import { auth, db } from './firebaseConfig';
 
 /*TODO:
   - Add user to database
@@ -17,7 +19,13 @@ import { auth } from './firebaseConfig';
   - Check if user is validated
 */
 
-export const signUp = async (email: string, password: string) => {
+// AUTHENTICATION
+export const signUp = async (
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+) => {
   try {
     const userCreds = await createUserWithEmailAndPassword(
       auth,
@@ -30,6 +38,8 @@ export const signUp = async (email: string, password: string) => {
       Add user to firebase-firestore
       Send verification email
     */
+    const data = await addUser(userId, firstName, lastName, email);
+    console.log('DATA', data);
 
     console.log('User Id', userId);
     return;
@@ -48,7 +58,6 @@ export const login = async (email: string, password: string) => {
     const user = userCreds.user;
     const accessToken = await user.getIdToken();
 
-    console.log('User Token:', accessToken);
     return;
   } catch (error) {
     console.log('error with login:', error);
@@ -85,4 +94,79 @@ export const onAuthStateChangedListener = (
 ) => {
   const authStateListener = auth.onAuthStateChanged(callback);
   return authStateListener;
+};
+
+// DATABASE
+const addUser = async (
+  userId: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+) => {
+  try {
+    const docRef = doc(db, 'users', userId);
+    await setDoc(docRef, {
+      firstName,
+      lastName,
+      email,
+    });
+
+    console.log('add user success');
+    return;
+  } catch (error) {
+    console.log('error adding user to database:', error);
+    return error;
+  }
+};
+
+export const updateUser = async (
+  docId: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  city: string,
+  country: string,
+) => {
+  try {
+    const docRef = doc(db, 'users', docId);
+
+    await updateDoc(docRef, {
+      firstName,
+      lastName,
+      email,
+      city: city || '',
+      country: country || '',
+    });
+
+    console.log('update user success');
+    return;
+  } catch (error) {
+    console.log('error updating user in database:', error);
+    return error;
+  }
+};
+
+export const getUserInfo = async () => {
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+      return;
+    }
+
+    const userId = user.uid;
+    const docRef = doc(db, 'users', userId);
+    const docSnapshot = await getDoc(docRef);
+
+    if (docSnapshot.exists()) {
+      const userData = docSnapshot.data();
+      return { userId: user.uid, ...userData };
+    } else {
+      console.log('No user found with the given ID');
+      return null;
+    }
+  } catch (error) {
+    console.log('error fetching user data:', error);
+    return error;
+  }
 };
