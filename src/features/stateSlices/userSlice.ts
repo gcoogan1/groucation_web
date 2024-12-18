@@ -7,6 +7,7 @@ interface UserState {
   lastName: string;
   city?: string | null;
   country?: string | null;
+  photoURL?: string | null;
 }
 
 const initialState: UserState = {
@@ -16,6 +17,7 @@ const initialState: UserState = {
   lastName: '',
   city: null,
   country: null,
+  photoURL: null,
 };
 
 const userSlice = createSlice({

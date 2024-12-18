@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import {
   getUserInfo,
   logout,
+  savePhotoURL,
   updateUser,
+  uploadPhoto,
 } from '../services/firebase/firebaseServices';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'store';
@@ -19,6 +21,8 @@ const HomeScreen = () => {
   );
   const [city, setCity] = useState(state.city || '');
   const [country, setCountry] = useState(state.country || '');
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleLogout = () => {
     // Reset global state
@@ -35,6 +39,37 @@ const HomeScreen = () => {
       console.log('error updating profile:', error);
     }
   };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      console.log('error: no files uploaded');
+      return;
+    }
+
+    try {
+      setUploading(true);
+
+      // Upload the photo to Firebase Storage
+      const photoURL = await uploadPhoto(file, `profile-pictures/${userId}`);
+
+      // Save the photo URL to Firestore
+      await savePhotoURL(userId, photoURL);
+
+      console.log('success');
+    } catch (err) {
+      console.log('error uploaing photo:', err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  console.log(state.photoURL);
 
   return (
     <div
@@ -55,6 +90,19 @@ const HomeScreen = () => {
         }}
       >
         <h1>Welcome</h1>
+        {state.photoURL && (
+          <img
+            src={state.photoURL}
+            alt="Profile"
+            style={{
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '2px solid #ddd',
+            }}
+          />
+        )}
         <h1>
           {firstName} {lastName}!
         </h1>
@@ -100,6 +148,23 @@ const HomeScreen = () => {
             Add
           </button>
         </form>
+        <div>
+          <h2>Upload Photo</h2>
+          <input type="file" onChange={handleFileChange} />
+          <button
+            style={{
+              width: '100px',
+              borderRadius: '15px',
+              padding: '5px',
+              cursor: 'pointer',
+            }}
+            onClick={handleUpload}
+            disabled={uploading}
+          >
+            {uploading ? 'Uploading...' : 'Upload'}
+          </button>
+        </div>
+
         <button
           style={{
             width: '200px',
