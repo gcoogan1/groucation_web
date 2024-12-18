@@ -13,13 +13,15 @@ type AuthFormProps = {
 const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (mode === 'signup') {
-        await signUp(email, password);
+        await signUp(email, password, firstName, lastName);
       } else {
         await login(email, password);
       }
@@ -88,21 +90,46 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {mode === 'login' && (
+          {mode === 'login' ? (
             <button
               style={{
                 height: '30px',
                 borderRadius: '5px',
+                cursor: 'pointer',
               }}
               onClick={handleForgotPassword}
             >
               Forgot password
             </button>
+          ) : (
+            <>
+              <input
+                type="firstName"
+                placeholder="First Name"
+                value={firstName}
+                style={{
+                  height: '30px',
+                }}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+              <input
+                type="lastName"
+                placeholder="Last Name"
+                value={lastName}
+                style={{
+                  height: '30px',
+                }}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </>
           )}
           <button
             style={{
               height: '30px',
               borderRadius: '5px',
+              cursor: 'pointer',
             }}
             type="submit"
           >
