@@ -5,7 +5,10 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store/index';
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Root element not found');
+
+createRoot(rootElement).render(
   <StrictMode>
     <Provider store={store}>
       <App />

@@ -1,13 +1,18 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from './store';
-import { logout } from './services/firebase/firebaseServices';
 import useAuthListener from './features/hooks/authHook';
 import AuthForm from './testScreens/AuthForm';
+import HomeScreen from './testScreens/HomeScreen';
+import useUserDetails from './features/hooks/userDetailsHook';
 
 const App: React.FC = () => {
-  const { user, loading } = useSelector((state: RootState) => state.auth);
   useAuthListener();
+
+  const { user, loading } = useSelector((state: RootState) => state.auth);
+
+  useUserDetails(user);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -15,10 +20,7 @@ const App: React.FC = () => {
   return (
     <div>
       {user ? (
-        <div>
-          <h1>Welcome, {user.email}</h1>
-          <button onClick={() => logout()}>Sign Out</button>
-        </div>
+        <HomeScreen />
       ) : (
         <div>
           <AuthForm mode="signup" />
