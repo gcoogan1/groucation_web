@@ -7,8 +7,9 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-import { auth, db } from './firebaseConfig';
+import { auth, db, storage } from './firebaseConfig';
 
 /*TODO:
   - Add user to database
@@ -126,6 +127,7 @@ export const updateUser = async (
   email: string,
   city: string,
   country: string,
+  photoURL?: string,
 ) => {
   try {
     const docRef = doc(db, 'users', docId);
@@ -136,6 +138,7 @@ export const updateUser = async (
       email,
       city: city || '',
       country: country || '',
+      photoURL,
     });
 
     console.log('update user success');
@@ -169,4 +172,40 @@ export const getUserInfo = async () => {
     console.log('error fetching user data:', error);
     return error;
   }
+};
+
+export const savePhotoURL = async (userId: string, photoURL: string) => {
+  try {
+    const userDoc = doc(db, 'users', userId);
+    await updateDoc(userDoc, { photoURL });
+  } catch (error) {
+    console.log('error adding photo to database:', error);
+    return error;
+  }
+};
+
+// PHOTO UPLOAD
+export const uploadPhoto = async (
+  file: File,
+  path: string,
+): Promise<string> => {
+  const storageRef = ref(storage, path);
+
+  return new Promise((resolve, reject) => {
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        // Optional: track upload progress
+      },
+      (error: any) => {
+        reject(error);
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        resolve(downloadURL);
+      },
+    );
+  });
 };
