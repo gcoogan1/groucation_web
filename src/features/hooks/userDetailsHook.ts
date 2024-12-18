@@ -16,6 +16,7 @@ type UserDetails = {
   lastName: string;
   city?: string;
   country?: string;
+  photoURL?: string;
 };
 
 const useUserDetails = (user: UserCreds | null) => {
