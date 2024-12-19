@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "groupcation-web-prod-92d63",
+    "default": "groupcation-web-dev-8a687",
     "dev": "groupcation-web-dev-8a687"
   },
   "targets": {
