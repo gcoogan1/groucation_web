@@ -1,8 +1,7 @@
 const App = () => {
   return (
     <div>
-      <h1>Groupcation App!</h1>
-      <p>This is test to use github actions</p>
+      <h1 style={{ textAlign: "center" }}>Groupcation -- Coming Soon!!</h1>
     </div>
   );
 };
