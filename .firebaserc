@@ -18,6 +18,9 @@
       "hosting": {
         "prod": [
           "groupcation-web-prod-92d63"
+        ],
+        "dev": [
+          "groupcation-web-dev-8a687"
         ]
       }
     }
