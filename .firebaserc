@@ -13,13 +13,6 @@
           "groupcation-web-prod-92d63"
         ]
       }
-    },
-    "groupcation-web-prod-92d63": {
-      "hosting": {
-        "prod": [
-          "groupcation-web-prod-92d63"
-        ]
-      }
     }
   },
   "etags": {}
