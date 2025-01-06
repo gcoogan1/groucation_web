@@ -1,19 +1,31 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+// Initialize Firebase Admin SDK
+admin.initializeApp();
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+// Cloud Function to check if a user already exists
+exports.checkEmailExists = functions.https.onRequest(async (req, res) => {
+  const {email} = req.body;
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+  if (!email) {
+    return res.status(400).send("MissingInput");
+  }
+
+  try {
+    // Check for email in firbease auth
+    const emailExists = admin.auth().getUserByEmail(email);
+    // Check for email in firestore collection
+    const db = admin.firestore();
+    const docRef = db.collection("users").doc(email);
+    const doc = await docRef.get();
+
+    if (emailExists && doc.exists) {
+      return res.status(200).send();
+    } else {
+      return res.status(404).send("UserNotFound");
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
