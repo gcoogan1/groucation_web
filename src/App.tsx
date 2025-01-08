@@ -1,6 +1,7 @@
 // import { useSelector } from 'react-redux';
 
 import { theme } from './styles/theme';
+import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
         }}
       >
         Groupcation -- Coming Soon!
+        <Add fill={theme.color.primary.nase1} />
       </h1>
     </div>
   );
