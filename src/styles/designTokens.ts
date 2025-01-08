@@ -347,7 +347,7 @@ const layout: Layout = {
   },
 };
 
-export const theme = {
+export const designTokens = {
   color: { ...semanticColors },
   font: { ...font },
   border: { ...border },
