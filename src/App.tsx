@@ -1,7 +1,8 @@
 // import { useSelector } from 'react-redux';
 
-import { theme } from './styles/theme';
+import { designTokens } from './styles/designTokens';
 import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
+import Layout from './components/Layout/Layout';
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   //}
 
   return (
-    <div>
+    <Layout>
       {/* {user ? (
         <HomeScreen />
       ) : (
@@ -33,15 +34,15 @@ const App: React.FC = () => {
       <h1
         style={{
           textAlign: 'center',
-          color: theme.color.primary.base1,
-          ...theme.font.title.large,
-          padding: theme.layout.space.large,
+          color: designTokens.color.primary.base1,
+          ...designTokens.font.title.large,
+          padding: designTokens.layout.space.large,
         }}
       >
         Groupcation -- Coming Soon!
-        <Add fill={theme.color.primary.nase1} />
+        <Add fill={designTokens.color.primary.nase1} />
       </h1>
-    </div>
+    </Layout>
   );
 };
 
