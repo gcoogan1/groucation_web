@@ -1,5 +1,7 @@
 // import { useSelector } from 'react-redux';
 
+import { theme } from './styles/theme';
+
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
 // import AuthForm from './testScreens/AuthForm';
@@ -27,7 +29,16 @@ const App: React.FC = () => {
           <AuthForm mode="login" />
         </div>
       )} */}
-      <h1 style={{ textAlign: "center" }}>Groupcation -- Coming Soon!</h1>
+      <h1
+        style={{
+          textAlign: 'center',
+          color: theme.color.primary.base1,
+          ...theme.font.title.large,
+          padding: theme.layout.space.large,
+        }}
+      >
+        Groupcation -- Coming Soon!
+      </h1>
     </div>
   );
 };
