@@ -35,7 +35,7 @@ export const StyledButton = styled.button<ButtonProps>`
   gap: ${layout.space.xSmall};
   border-radius: ${layout.space.medium};
 
-  &:focus {
+  &:focus-visible {
     outline: ${border.weight.medium.borderWidth} solid white;
     box-shadow: 0 0 0 4px ${color.focus.base};
   }
@@ -53,4 +53,11 @@ export const StyledButton = styled.button<ButtonProps>`
     color: ${({ variant, color, disabled }) =>
       !disabled && buttonVariants[variant][color]['pressed']?.color};
   }
+`;
+
+export const Label = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 `;

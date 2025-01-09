@@ -1,4 +1,4 @@
-import { StyledButton } from './Button.styles';
+import { StyledButton, Label } from './Button.styles';
 import Loader from '../Loader/Loader';
 import Graphics from '../Graphics/Graphics';
 
@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
     >
       {leftIcon && !loading && <Graphics>{leftIcon}</Graphics>}
       {!!loading && <Loader color={loaderIconColor} />}
-      {!!loading ? 'Loading...' : children}
+      <Label>{!!loading ? 'Loading...' : children}</Label>
       {rightIcon && !loading && <Graphics>{rightIcon}</Graphics>}
     </StyledButton>
   );

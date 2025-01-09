@@ -49,8 +49,18 @@ const App: React.FC = () => {
           display: 'flex',
           justifyContent: 'center',
           alignSelf: 'center',
+          gap: '8px',
         }}
       >
+        <Button
+          variant="filled"
+          color="primary"
+          leftIcon={<Add fill={'white'} />}
+          rightIcon={<Add fill={'white'} />}
+          loaderIconColor="black"
+        >
+          Click me me meme
+        </Button>
         <Button
           variant="outlined"
           color="primary"
