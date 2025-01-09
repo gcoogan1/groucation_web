@@ -3,6 +3,7 @@
 import { designTokens } from './styles/designTokens';
 import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
 import Layout from './components/Layout/Layout';
+import Button from './components/Button/Button';
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -42,6 +43,24 @@ const App: React.FC = () => {
         Groupcation -- Coming Soon!
         <Add fill={designTokens.color.primary.nase1} />
       </h1>
+      <div
+        style={{
+          width: '150px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignSelf: 'center',
+        }}
+      >
+        <Button
+          variant="outlined"
+          color="primary"
+          leftIcon={<Add fill={'white'} />}
+          rightIcon={<Add fill={'white'} />}
+          loaderIconColor="black"
+        >
+          Click me
+        </Button>
+      </div>
     </Layout>
   );
 };
