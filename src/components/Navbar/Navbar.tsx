@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ children }) => {
     <NavbarWrapper>
       <Container>
         <LogoContainer>
-          <Logo />
+          <Logo aria-label="groupcation logo" />
         </LogoContainer>
         <LinksContainer>{children}</LinksContainer>
       </Container>

@@ -7,6 +7,7 @@ interface ButtonProps {
   color: 'primary' | 'secondary' | 'tertiary';
   loaderIconColor: string;
   children: React.ReactNode;
+  ariaLabel: string;
   onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
@@ -20,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   color,
   children,
   loaderIconColor,
+  ariaLabel,
   onClick,
   disabled = false,
   loading = false,
@@ -33,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
       color={color}
       styles={styles}
       disabled={disabled}
+      aria-label={ariaLabel}
       onClick={disabled || loading ? undefined : onClick}
     >
       {leftIcon && !loading && <Graphics>{leftIcon}</Graphics>}

@@ -17,7 +17,6 @@ export const NavbarWrapper = styled.div`
 
 export const Container = styled.div`
   max-width: 1200px;
-  min-width: 320px;
   width: 100%;
   display: flex;
   gap: ${layout.space.small};
