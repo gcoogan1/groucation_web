@@ -7,6 +7,7 @@ const { layout, color, font } = designTokens;
 export const Links = styled.div`
   display: flex;
   gap: ${layout.space.small};
+  align-items: center;
 `;
 
 export const Container = styled.div`

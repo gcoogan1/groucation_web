@@ -14,8 +14,8 @@ const Homepage = () => {
     <>
       <Navbar>
         <Links>
+          <div>
           <Button
-            styles={{ width: '100px' }}
             variant="text"
             color="primary"
             ariaLabel="login"
@@ -23,8 +23,8 @@ const Homepage = () => {
           >
             Log In
           </Button>
+          </div>
           <Button
-            styles={{ width: '100px' }}
             variant="filled"
             color="primary"
             ariaLabel="signup"
@@ -39,15 +39,16 @@ const Homepage = () => {
           <Title>Groupcation</Title>
           <SubTitle>Travel the world together.</SubTitle>
         </TextContainer>
-        <Button
-          styles={{ width: '120px' }}
-          variant="filled"
-          color="primary"
-          ariaLabel="get started"
-          loaderIconColor={designTokens.color.primary.text1}
-        >
-          Get Started
-        </Button>
+        <div>
+          <Button
+            variant="filled"
+            color="primary"
+            ariaLabel="get started"
+            loaderIconColor={designTokens.color.primary.text1}
+          >
+            Get Started
+          </Button>
+        </div>
       </Container>
     </>
   );
