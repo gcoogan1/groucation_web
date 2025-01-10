@@ -351,7 +351,8 @@ export const designTokens = {
   color: { ...semanticColors },
   font: { ...font },
   border: { ...border },
-  opacity: { ...opacity },
-  shadow: { ...shadow },
+  effect: { ...effect },
+  // opacity: { ...opacity },
+  // shadow: { ...shadow },
   layout: { ...layout },
 };
