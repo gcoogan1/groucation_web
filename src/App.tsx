@@ -1,9 +1,11 @@
 // import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 import { designTokens } from './styles/designTokens';
 import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
 import Layout from './components/Layout/Layout';
 import Button from './components/Button/Button';
+import Input from './components/Input/Input';
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -21,6 +23,7 @@ const App: React.FC = () => {
   // if (loading) {
   //   return <div>Loading...</div>;
   //}
+  const [value, setValue] = useState("");
 
   return (
     <Layout>
@@ -71,6 +74,17 @@ const App: React.FC = () => {
           Click me
         </Button>
       </div>
+      <div style={{ maxWidth: "400px", margin: "0 auto", marginTop: "30px" }}>
+      <Input
+        id="email"
+        label="Email Address"
+        value={value}
+        placeholder='Placeholder Text'
+        onChange={(e) => setValue(e.target.value)}
+        helperText='Supporting Text'
+        errorMessage='This filed is required.'
+      />
+    </div>
     </Layout>
   );
 };
