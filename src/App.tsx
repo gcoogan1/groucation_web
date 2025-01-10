@@ -5,6 +5,7 @@ import Add from './assets/Icons/Add.svg?react'; // special import for svgs with 
 import Layout from './components/Layout/Layout';
 import Button from './components/Button/Button';
 import Navbar from './components/Navbar/Navbar';
+import Homepage from './screens/Homepage/Homepage';
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -33,27 +34,7 @@ const App: React.FC = () => {
           <AuthForm mode="login" />
         </div>
       )} */}
-      <Navbar>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button
-            styles={{ width: '100px' }}
-            variant="text"
-            color="primary"
-            loaderIconColor="black"
-          >
-            Log In
-          </Button>
-          <Button
-            styles={{ width: '100px' }}
-            variant="filled"
-            color="primary"
-            loaderIconColor="black"
-          >
-            Sign Up
-          </Button>
-        </div>
-      </Navbar>
-      <h1>hi</h1>
+      <Homepage />
     </Layout>
   );
 };
