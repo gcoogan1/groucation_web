@@ -4,6 +4,7 @@ import { designTokens } from './styles/designTokens';
 import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
 import Layout from './components/Layout/Layout';
 import Button from './components/Button/Button';
+import Navbar from './components/Navbar/Navbar';
 
 // import { RootState } from './store';
 // import useAuthListener from './features/hooks/authHook';
@@ -32,45 +33,27 @@ const App: React.FC = () => {
           <AuthForm mode="login" />
         </div>
       )} */}
-      <h1
-        style={{
-          textAlign: 'center',
-          color: designTokens.color.primary.base1,
-          ...designTokens.font.title.large,
-          padding: designTokens.layout.space.large,
-        }}
-      >
-        Groupcation -- Coming Soon!
-        <Add fill={designTokens.color.primary.nase1} />
-      </h1>
-      <div
-        style={{
-          width: '150px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignSelf: 'center',
-          gap: '8px',
-        }}
-      >
-        <Button
-          variant="filled"
-          color="primary"
-          leftIcon={<Add fill={'white'} />}
-          rightIcon={<Add fill={'white'} />}
-          loaderIconColor="black"
-        >
-          Click me me meme
-        </Button>
-        <Button
-          variant="outlined"
-          color="primary"
-          leftIcon={<Add fill={'white'} />}
-          rightIcon={<Add fill={'white'} />}
-          loaderIconColor="black"
-        >
-          Click me
-        </Button>
-      </div>
+      <Navbar>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <Button
+            styles={{ width: '100px' }}
+            variant="text"
+            color="primary"
+            loaderIconColor="black"
+          >
+            Log In
+          </Button>
+          <Button
+            styles={{ width: '100px' }}
+            variant="filled"
+            color="primary"
+            loaderIconColor="black"
+          >
+            Sign Up
+          </Button>
+        </div>
+      </Navbar>
+      <h1>hi</h1>
     </Layout>
   );
 };

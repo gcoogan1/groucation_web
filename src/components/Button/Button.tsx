@@ -12,7 +12,7 @@ interface ButtonProps {
   loading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  styles?: React.CSSProperties; 
+  styles?: React.CSSProperties;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   loading = false,
   leftIcon,
   rightIcon,
-  styles
+  styles,
 }) => {
   return (
     <StyledButton
