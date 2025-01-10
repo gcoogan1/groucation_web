@@ -91,7 +91,7 @@ type Typography = {
 
 const typography: Typography = {
   fontFamily: {
-    sans: 'Rubik',
+    sans: "'Rubik', sans-serif"
   },
   fontSize: {
     12: '12px',

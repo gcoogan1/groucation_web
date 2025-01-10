@@ -28,9 +28,17 @@ export const TextContainer = styled.div`
 export const Title = styled.h1`
   ${font.display.medium};
   color: ${color.primary.base1};
+
+  @media (max-width: 320px) {
+    ${font.display.small};
+  }
 `;
 
 export const SubTitle = styled.h2`
   ${font.title.medium};
   color: ${color.surface.text1};
+
+  @media (max-width: 320px) {
+    ${font.title.small};
+  }
 `;
