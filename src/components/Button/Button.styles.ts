@@ -9,6 +9,7 @@ interface ButtonProps {
   variant: 'filled' | 'outlined' | 'text';
   color: 'primary' | 'secondary' | 'tertiary';
   disabled: boolean;
+  styles?: React.CSSProperties;
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -53,6 +54,8 @@ export const StyledButton = styled.button<ButtonProps>`
     color: ${({ variant, color, disabled }) =>
       !disabled && buttonVariants[variant][color]['pressed']?.color};
   }
+
+  ${({ styles }) => styles && { ...styles }};
 `;
 
 export const Label = styled.span`
