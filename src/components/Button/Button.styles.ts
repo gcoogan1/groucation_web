@@ -34,7 +34,7 @@ export const StyledButton = styled.button<ButtonProps>`
   ${font.body.mediumBold};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   gap: ${layout.space.xSmall};
-  border-radius: ${layout.space.medium};
+  ${border.radius.medium};
 
   &:focus-visible {
     outline: ${border.weight.medium.borderWidth} solid white;
