@@ -8,6 +8,7 @@ import {
 import { designTokens } from '../../styles/designTokens';
 import Button from '../../components/Button/Button';
 import Navbar from '../../components/Navbar/Navbar';
+import Signup from '../../testScreens/Signup';
 
 const Homepage = () => {
   return (
@@ -15,14 +16,14 @@ const Homepage = () => {
       <Navbar>
         <Links>
           <div>
-          <Button
-            variant="text"
-            color="primary"
-            ariaLabel="login"
-            loaderIconColor={designTokens.color.primary.base1}
-          >
-            Log In
-          </Button>
+            <Button
+              variant="text"
+              color="primary"
+              ariaLabel="login"
+              loaderIconColor={designTokens.color.primary.base1}
+            >
+              Log In
+            </Button>
           </div>
           <Button
             variant="filled"
@@ -49,6 +50,7 @@ const Homepage = () => {
             Get Started
           </Button>
         </div>
+        <Signup />
       </Container>
     </>
   );

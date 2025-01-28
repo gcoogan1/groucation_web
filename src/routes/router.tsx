@@ -1,13 +1,13 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-} from "react-router-dom";
-import { ROUTES } from "./routes";
+} from 'react-router-dom';
+import { ROUTES } from './routes';
 
 interface AuthRouteProps {
   element: React.ReactNode;
@@ -43,7 +43,6 @@ const UnauthenticatedRoute: React.FC<AuthRouteProps> = ({ element }) => {
   return element;
 };
 
-
 const routesWithAuth = ROUTES.map((route) => {
   // Check if the route needs to be protected
   if (route.isAuth) {
@@ -66,5 +65,6 @@ const routesWithAuth = ROUTES.map((route) => {
   );
 });
 
-export const router = createBrowserRouter(createRoutesFromElements(routesWithAuth));
-
+export const router = createBrowserRouter(
+  createRoutesFromElements(routesWithAuth),
+);

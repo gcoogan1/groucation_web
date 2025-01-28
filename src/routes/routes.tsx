@@ -1,6 +1,6 @@
-import Signup from "../testScreens/Signup";
-import HomeScreen from "../testScreens/HomeScreen";
-import Login from "../testScreens/Login";
+import Signup from '../testScreens/Signup';
+import HomeScreen from '../testScreens/HomeScreen';
+import Login from '../testScreens/Login';
 
 type Route = {
   path: string;
@@ -10,18 +10,18 @@ type Route = {
 
 export const ROUTES: Route[] = [
   {
-    path: "/",
+    path: '/',
     element: <HomeScreen />,
-    isAuth: true
+    isAuth: true,
   },
   {
-    path: "/signup",
+    path: '/signup',
     element: <Signup />,
-    isAuth: false
+    isAuth: false,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
-    isAuth: false
-  }
+    isAuth: false,
+  },
 ];

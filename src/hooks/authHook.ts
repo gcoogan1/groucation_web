@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'store';
 
-import { onAuthStateChangedListener } from '../../services/firebase/firebaseServices';
-import { setUser, setLoading } from '../../features/stateSlices/authSlice';
+import { onAuthStateChangedListener } from '../services/firebase/firebaseServices';
+import { setUser, setLoading } from '../store/slices/authSlice';
 
 /* Listens for authentication state changes and updates the Redux store accordingly, 
 then removes listener (cleanup) */
