@@ -29,7 +29,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const userInfo = await getUserInfo(userId);
+        const userInfo = await getUserInfo();
         if (userInfo) {
           dispatch(updateUserDetails(userInfo));
         }
