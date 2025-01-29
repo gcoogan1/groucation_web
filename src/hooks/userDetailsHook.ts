@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setUserDetails } from '../stateSlices/userSlice';
-import { getUserInfo } from '../../services/firebase/firebaseServices';
+import { setUserDetails } from '../store/slices/userSlice';
+import { getUserInfo } from '../services/firebase/firebaseServices';
 
 type UserCreds = {
   email: string | null;

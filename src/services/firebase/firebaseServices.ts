@@ -127,7 +127,7 @@ export const updateUser = async (
   email: string,
   city: string,
   country: string,
-  photoURL?: string,
+  photoURL: string = '',
 ) => {
   try {
     const docRef = doc(db, 'users', docId);
@@ -149,7 +149,7 @@ export const updateUser = async (
   }
 };
 
-export const getUserInfo = async () => {
+export const getUserInfo = async (userId: string) => {
   try {
     const auth = getAuth();
     const user = auth.currentUser;

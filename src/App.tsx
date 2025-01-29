@@ -1,24 +1,18 @@
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 
-import { designTokens } from './styles/designTokens';
-import Add from './assets/Icons/Add.svg?react'; // special import for svgs with vite-plugin-svgr
+import { RootState } from './store';
+import { router } from './routes/router';
 import Layout from './components/Layout/Layout';
-import Button from './components/Button/Button';
-import Navbar from './components/Navbar/Navbar';
-import Homepage from './screens/Homepage/Homepage';
-
-// import { RootState } from './store';
-// import useAuthListener from './features/hooks/authHook';
-// import AuthForm from './testScreens/AuthForm';
-// import HomeScreen from './testScreens/HomeScreen';
-// import useUserDetails from './features/hooks/userDetailsHook';
+import useAuthListener from './hooks/authHook';
+import useUserDetails from './hooks/userDetailsHook';
 
 const App: React.FC = () => {
-  // useAuthListener();
+  useAuthListener();
 
-  // const { user, loading } = useSelector((state: RootState) => state.auth);
+  const { user, loading } = useSelector((state: RootState) => state.auth);
 
-  // useUserDetails(user);
+  useUserDetails(user);
 
   // if (loading) {
   //   return <div>Loading...</div>;
@@ -26,15 +20,7 @@ const App: React.FC = () => {
 
   return (
     <Layout>
-      {/* {user ? (
-        <HomeScreen />
-      ) : (
-        <div>
-          <AuthForm mode="signup" />
-          <AuthForm mode="login" />
-        </div>
-      )} */}
-      <Homepage />
+      <RouterProvider router={router} />
     </Layout>
   );
 };

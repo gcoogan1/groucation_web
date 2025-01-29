@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   getUserInfo,
   logout,
@@ -8,74 +8,133 @@ import {
 } from '../services/firebase/firebaseServices';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'store';
-import { setUser } from '../features/stateSlices/authSlice';
 import {
   resetUserDetails,
   setUserDetails,
-} from '../features/stateSlices/userSlice';
+  updateUserDetails,
+} from '../store/slices/userSlice';
 
 const HomeScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { userId, email, firstName, lastName, ...state } = useSelector(
-    (state: RootState) => state.user,
-  );
-  const [city, setCity] = useState(state.city || '');
-  const [country, setCountry] = useState(state.country || '');
+  const { userId, email, firstName, lastName, photoURL, city, country } =
+    useSelector((state: RootState) => state.user);
+
+  const [cityInput, setCity] = useState(city || '');
+  const [countryInput, setCountry] = useState(country || '');
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  const handleLogout = () => {
-    // Reset global state
-    dispatch(setUser(null));
-    dispatch(resetUserDetails());
-    logout();
-  };
+  // Fetch user info on initial load
+  // TODO: Check for more optimal way
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const userInfo = await getUserInfo(userId);
+        if (userInfo) {
+          dispatch(updateUserDetails(userInfo));
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await updateUser(userId, firstName, lastName, email, city, country);
-    } catch (error: any) {
-      console.log('error updating profile:', error);
+    if (userId) {
+      fetchUserInfo(); // Fetch user info only if userId exists
     }
-  };
+  }, [userId, dispatch]); // Re-run effect only if userId changes
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      try {
+        await updateUser(
+          userId,
+          firstName,
+          lastName,
+          email,
+          cityInput,
+          countryInput,
+          photoURL || '',
+        );
+        dispatch(
+          setUserDetails({
+            ...{
+              userId,
+              email,
+              firstName,
+              lastName,
+              city: cityInput,
+              country: countryInput,
+              photoURL,
+            },
+          }),
+        );
+      } catch (error) {
+        console.error('Error updating profile:', error);
+      }
+    },
+    [
+      userId,
+      firstName,
+      lastName,
+      email,
+      cityInput,
+      countryInput,
+      photoURL,
+      dispatch,
+    ],
+  );
 
-  const handleUpload = async () => {
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files?.[0]) setFile(e.target.files[0]);
+    },
+    [],
+  );
+
+  const handleUpload = useCallback(async () => {
     if (!file) {
-      console.log('error: no files uploaded');
+      console.warn('No file selected for upload');
       return;
     }
-
     try {
       setUploading(true);
-
-      // Upload the photo to Firebase Storage
-      const photoURL = await uploadPhoto(file, `profile-pictures/${userId}`);
-
-      // Save the photo URL to Firestore
-      await savePhotoURL(userId, photoURL);
-
-      console.log('success');
-    } catch (err) {
-      console.log('error uploaing photo:', err);
+      const uploadedPhotoURL = await uploadPhoto(
+        file,
+        `profile-pictures/${userId}`,
+      );
+      await savePhotoURL(userId, uploadedPhotoURL);
+      dispatch(
+        setUserDetails({
+          ...{
+            userId,
+            email,
+            firstName,
+            lastName,
+            city,
+            country,
+            photoURL: uploadedPhotoURL,
+          },
+        }),
+      );
+    } catch (error) {
+      console.error('Error uploading photo:', error);
     } finally {
       setUploading(false);
     }
-  };
+  }, [file, userId, email, firstName, lastName, city, country, dispatch]);
 
-  console.log(state.photoURL);
+  // Handle logout
+  const handleLogout = useCallback(() => {
+    dispatch(resetUserDetails());
+    logout();
+  }, [dispatch]);
 
   return (
     <div
       style={{
         display: 'flex',
-        height: '100vh',
+        marginTop: '60px',
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -86,95 +145,102 @@ const HomeScreen = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '5px',
+          gap: '10px',
         }}
       >
-        <h1>Welcome</h1>
-        {state.photoURL && (
+        <h1>{`${firstName} ${lastName}`}</h1>
+        {photoURL ? (
           <img
-            src={state.photoURL}
+            src={photoURL}
             alt="Profile"
             style={{
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
+              width: '300px',
+              height: '300px',
+              borderRadius: '10%',
               objectFit: 'cover',
               border: '2px solid #ddd',
             }}
           />
+        ) : (
+          <p>No profile picture</p>
         )}
-        <h1>
-          {firstName} {lastName}!
-        </h1>
-        <p>Please add a city and country to your profile</p>
+
         <form
           style={{
             display: 'flex',
-            justifyContent: 'center',
             flexDirection: 'column',
-            gap: '6px',
+            gap: '10px',
+            width: '450px',
           }}
           onSubmit={handleSubmit}
         >
+          <p style={{ fontWeight: 800 }}>City</p>
           <input
-            type="city"
-            placeholder={state.city ? state.city : 'City'}
-            value={city}
-            style={{
-              height: '30px',
-            }}
+            type="text"
+            placeholder={city ? city : 'City'}
+            value={cityInput}
             onChange={(e) => setCity(e.target.value)}
-            required
+            style={{ height: '30px' }}
           />
+          <p style={{ fontWeight: 800 }}>Country</p>
           <input
-            type="country"
-            placeholder={state?.country ? state.country : 'Country'}
-            value={country}
-            style={{
-              height: '30px',
-            }}
+            type="text"
+            placeholder={country ? country : 'Country'}
+            value={countryInput}
             onChange={(e) => setCountry(e.target.value)}
-            required
+            style={{ height: '30px' }}
           />
           <button
+            type="submit"
             style={{
-              width: '200px',
-              borderRadius: '15px',
-              padding: '10px',
+              width: '100%',
+              padding: '.8rem',
+              background: 'blue',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
               cursor: 'pointer',
             }}
-            type="submit"
           >
-            Add
+            Update Profile
           </button>
         </form>
-        <div>
+
+        <div style={{ marginTop: '10px' }}>
           <h2>Upload Photo</h2>
           <input type="file" onChange={handleFileChange} />
           <button
-            style={{
-              width: '100px',
-              borderRadius: '15px',
-              padding: '5px',
-              cursor: 'pointer',
-            }}
             onClick={handleUpload}
             disabled={uploading}
+            style={{
+              width: '100px',
+              padding: '.5rem',
+              marginTop: '1.5rem',
+              background: '#E40078',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
           >
-            {uploading ? 'Uploading...' : 'Upload'}
+            {uploading ? 'Uploading...' : 'Upload Photo'}
           </button>
         </div>
 
         <button
+          onClick={handleLogout}
           style={{
-            width: '200px',
-            borderRadius: '15px',
-            padding: '10px',
+            width: '300px',
+            padding: '1rem',
+            marginTop: '1.5rem',
+            background: 'orange',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
             cursor: 'pointer',
           }}
-          onClick={handleLogout}
         >
-          Sign Out
+          Logout
         </button>
       </div>
     </div>
