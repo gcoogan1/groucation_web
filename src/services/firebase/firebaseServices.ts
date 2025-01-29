@@ -149,7 +149,7 @@ export const updateUser = async (
   }
 };
 
-export const getUserInfo = async (userId: string) => {
+export const getUserInfo = async () => {
   try {
     const auth = getAuth();
     const user = auth.currentUser;
